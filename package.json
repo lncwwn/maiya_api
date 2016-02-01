@@ -1,0 +1,20 @@
+{
+  "name": "maiya_api",
+  "version": "1.0.0",
+  "description": "restful api for maiya application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "maiya",
+    "api"
+  ],
+  "author": "victor li",
+  "license": "MIT",
+  "devDependencies": {
+    "hapi": "^13.0.0",
+    "mysql": "^2.10.2",
+    "sequelize": "^3.19.0"
+  }
+}
