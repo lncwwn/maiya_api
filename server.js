@@ -18,6 +18,14 @@ server.connection({
     port: APP_SETTING.port
 });
 
+server.route({
+    method: 'GET',
+    path: '/test',
+    handler: (request, reply) => {
+        return reply('Hello, World');
+    }
+});
+
 server.start((err)=> {
     if (err) {
         throw err;
