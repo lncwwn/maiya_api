@@ -15,9 +15,14 @@ server.connection({
     port: APP_SETTING.port
 });
 
-server.start((err)=> {
+server.register({
+    register: require('good'),
+    options: require('./settings/log_setting')
+}, (err) => {
     if (err) throw err;
-    console.log('Server start at:', server.info.uri);
+    server.start(() => {
+        console.log('Server start at:', server.info.uri);
+    });
 });
 
 const postRouter = require('./routes/postRouter');
