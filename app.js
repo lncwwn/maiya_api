@@ -30,4 +30,5 @@ server.register({
 });
 
 const postRouter = require('./routes/postRouter');
+const userRouter = require('./routes/userRouter');
 
