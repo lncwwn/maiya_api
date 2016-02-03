@@ -15,13 +15,17 @@ server.connection({
     port: APP_SETTING.port
 });
 
+// register logger plugin
 server.register({
     register: require('good'),
     options: require('./settings/log_setting')
 }, (err) => {
-    if (err) throw err;
+    if (err) {
+        server.log(['error'], err);
+        throw err;
+    }
     server.start(() => {
-        console.log('Server start at:', server.info.uri);
+        server.log(['info'], 'Server start at:'+server.info.uri);
     });
 });
 
