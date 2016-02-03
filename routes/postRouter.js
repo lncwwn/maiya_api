@@ -10,7 +10,15 @@
 const server = require('../server');
 const Post = require('../models/post');
 
-// list posts
+const Joi = require('joi');
+
+/**
+ * list posts
+ * /posts?offset=0&limit=10
+ *
+ * @param offset optional, default is 0
+ * @param limit optional, default is 10
+ */
 server.route({
     method: 'GET',
     path: '/posts',
@@ -23,14 +31,30 @@ server.route({
     }
 });
 
+/**
+ * find post by seecified id
+ * /posts/id/1
+ *
+ * @param id post id
+ */
 server.route({
     method: 'GET',
-    path: '/posts/{id}',
+    path: '/posts/id/{id}',
     handler: (request, reply) => {
-        const id = request.params.id;
+        const id = +request.params.id;
+        if (isNaN(id)) {
+            //return reply();
+        }
         Post.findById(id).then(data => {
             return reply(data);
         });
+    },
+    config: {
+        validate: {
+            params: {
+                id: Joi.number()
+            }
+        }
     }
 });
 
