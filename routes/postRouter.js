@@ -58,3 +58,27 @@ server.route({
     }
 });
 
+/**
+ * find post by specified title
+ * /posts/title/post title
+ *
+ * @param title post title
+ */
+server.route({
+    method: 'GET',
+    path: '/posts/title/{title}',
+    handler: (request, reply) => {
+        const title = request.params.title;
+        Post.findByTitle(title).then(data => {
+            return reply(data);
+        });
+    },
+    config: {
+        validate: {
+            params: {
+                title: Joi.string().min(3)
+            }
+        }
+    }
+});
+

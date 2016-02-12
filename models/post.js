@@ -40,5 +40,11 @@ Post.list = function(offset, limit) {
     });
 };
 
+// find post by title
+Post.findByTitle = function(title) {
+    console.log(title);
+    return Post.findOne({where: {title: title}});
+};
+
 module.exports = Post;
 
