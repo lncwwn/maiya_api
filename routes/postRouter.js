@@ -82,3 +82,28 @@ server.route({
     }
 });
 
+/**
+ * create new post
+ *
+ * @author victor li
+ * @date 2016/02/15
+ */
+server.route({
+    method: 'POST',
+    path: '/posts',
+    handler: (request, reply) => {
+        const title = request.payload.title;
+        const content = request.payload.content;
+        const created = request.payload.created;
+        const author = request.payload.author;
+    },
+    config: {
+        validate: {
+            params: {
+                title: Joi.string().min(3),
+                content: Joi.string().min(1),
+                author: Joi.string()
+            }
+        }
+    }
+});
