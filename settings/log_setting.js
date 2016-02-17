@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
     opsInterval: 1000,
     reporters: [{

@@ -15,6 +15,7 @@ const User = sequelize.define('user', {
     nick: {type: Sequelize.STRING, field: 'nick', unique: true, allowNull: false},
     email: {type: Sequelize.STRING, field: 'email', unique: true, allowNull: true},
     password: {type: Sequelize.STRING, field: 'password', allowNull: false},
+    salt: {type: Sequelize.STRING, field: 'salt', allowNull: false},
     created: {type: Sequelize.DATE, field: 'created', defaultValue: Sequelize.NOW, allowNull: false},
     updated: {type: Sequelize.DATE, field: 'updated', allowNull: true}
 }, {

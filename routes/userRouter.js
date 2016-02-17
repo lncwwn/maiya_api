@@ -9,9 +9,11 @@
 
 const server = require('../server');
 const User = require('../models/user');
+const util = require('../modules/util');
 
 const Joi = require('joi');
 const moment = require('moment');
+const md5 = require('md5');
 
 /**
  * get user by specified id
@@ -69,13 +71,21 @@ server.route({
         const nick = request.payload.nick;
         const password1 = request.payload.password1;
         const password2 = request.payload.password2;
-        const password = md5(password1);
+        const salt = util.random().toString();
+        const password = md5(md5(password1) + salt);
         const now = moment().format('YYYY-MM-DD hh:mm:ss');
         User.create({
             nick: nick,
             password: password,
+            salt: salt,
             created: now
         }).then(data => {
+            if (data && data.salt) {
+                data.salt = null;
+            }
+            if (data && data.password) {
+                data.password = null;
+            }
             return reply(data);
         });
     },
