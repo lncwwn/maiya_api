@@ -27,5 +27,8 @@
     "mysql": "^2.10.2",
     "sequelize": "^3.19.0",
     "webpack": "^1.12.12"
+  },
+  "dependencies": {
+    "boom": "^3.1.2"
   }
 }

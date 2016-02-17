@@ -11,6 +11,7 @@ const server = require('../server');
 const User = require('../models/user');
 const util = require('../modules/util');
 
+const Boom =  require('boom');
 const Joi = require('joi');
 const moment = require('moment');
 const md5 = require('md5');
@@ -44,15 +45,26 @@ server.route({
     handler: (request, reply) => {
         const nick = request.payload.nick;
         const password = request.payload.password;
-        User.findOne({where: {nick: nick, password: password}}).then(data => {
-            return reply(data);
+        User.findOne({where: {nick: nick}}).then(data => {
+            if (!data) {
+                return reply(Boom.unauthorized(`cannot find user named "${nick}"`));
+            }
+            if (data.password === md5(password + data.salt)) {
+                return reply({
+                    id: data.id,
+                    nick: data.nick,
+                    created: data.created,
+                    updated: data.updated
+                });
+            }
+            return reply(Boom.unauthorized('invalid password'));
         });
     },
     config: {
         validate: {
             payload: {
                 nick: Joi.string().min(1),
-                password: Joi.string().min(6).max(30)
+                password: Joi.string().length(32) // for encrypted password
             }
         }
     }
@@ -71,19 +83,19 @@ server.route({
         const nick = request.payload.nick;
         const password1 = request.payload.password1;
         const password2 = request.payload.password2;
+        const email = request.payload.email;
         const salt = util.random().toString();
         const password = md5(md5(password1) + salt);
         const now = moment().format('YYYY-MM-DD hh:mm:ss');
         User.create({
             nick: nick,
             password: password,
+            email: email,
             salt: salt,
             created: now
         }).then(data => {
             if (data && data.salt) {
                 data.salt = null;
-            }
-            if (data && data.password) {
                 data.password = null;
             }
             return reply(data);
@@ -93,8 +105,9 @@ server.route({
         validate: {
             payload: {
                 nick: Joi.string().min(1),
-                password1: Joi.string().min(6).max(30),
-                password2: Joi.string().min(6).max(30)
+                password1: Joi.string().length(32), // raw password
+                password2: Joi.string().length(32), // raw password
+                email: Joi.string().email()
             }
         }
     }
