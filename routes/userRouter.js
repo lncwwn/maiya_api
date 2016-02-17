@@ -81,15 +81,14 @@ server.route({
     path: '/users/register',
     handler: (request, reply) => {
         const nick = request.payload.nick;
-        const password1 = request.payload.password1;
-        const password2 = request.payload.password2;
+        const password = request.payload.password1;
         const email = request.payload.email;
         const salt = util.random().toString();
-        const password = md5(md5(password1) + salt);
+        const _password = md5(password + salt);
         const now = moment().format('YYYY-MM-DD hh:mm:ss');
         User.create({
             nick: nick,
-            password: password,
+            password: _password,
             email: email,
             salt: salt,
             created: now
@@ -99,14 +98,15 @@ server.route({
                 data.password = null;
             }
             return reply(data);
+        }).catch(function(err) {
+            return reply(err.errors);
         });
     },
     config: {
         validate: {
             payload: {
                 nick: Joi.string().min(1),
-                password1: Joi.string().length(32), // raw password
-                password2: Joi.string().length(32), // raw password
+                password: Joi.string().length(32), // encrypted password
                 email: Joi.string().email()
             }
         }
