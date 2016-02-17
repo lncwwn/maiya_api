@@ -34,6 +34,23 @@ server.route({
 });
 
 /**
+ * get user by specified nick
+ *
+ * @author victor li
+ * @date 2016/02/17
+ */
+server.route({
+    method: 'GET',
+    path: '/users/nick/{nick}',
+    handler: (request, reply) => {
+        const nick = request.params.nick;
+        User.findByNick(nick).then(data => {
+            return reply(data);
+        });
+    }
+});
+
+/**
  * user login api
  *
  * @author victor li
@@ -99,7 +116,11 @@ server.route({
             }
             return reply(data);
         }).catch(function(err) {
-            return reply(err.errors);
+            if (err.name === 'SequelizeUniqueConstraintError') {
+                return reply(Boom.conflict(`nick "${nick}" has been used`));
+            } else {
+                return reply(err.errors);
+            }
         });
     },
     config: {
@@ -112,3 +133,4 @@ server.route({
         }
     }
 });
+

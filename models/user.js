@@ -23,5 +23,9 @@ const User = sequelize.define('user', {
     tableName: 'tb_user'
 });
 
+User.findByNick = function(nick) {
+    return User.findOne({where: {nick: nick}});
+};
+
 module.exports = User;
 
