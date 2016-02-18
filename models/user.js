@@ -23,8 +23,26 @@ const User = sequelize.define('user', {
     tableName: 'tb_user'
 });
 
-User.findByNick = function(nick) {
+// find users by offset and limit
+User.list = function(offset, limit) {
+    return User.findAndCountAll({
+        attributes: ['id', 'nick', 'email', 'created', 'updated'],
+        offset: offset,
+        limit: limit
+    });
+};
+
+// 该方法查询user所有属性用于用户验证
+User.findUserForAuth = function(nick) {
     return User.findOne({where: {nick: nick}});
+};
+
+// 该方法不查询用户密码等敏感信息
+User.findByNick = function(nick) {
+    return User.findOne({
+        attributes: ['id', 'nick', 'email', 'created', 'updated'],
+        where: {nick: nick}
+    });
 };
 
 module.exports = User;

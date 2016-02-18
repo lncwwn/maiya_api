@@ -44,7 +44,7 @@ server.route({
     path: '/users/nick/{nick}',
     handler: (request, reply) => {
         const nick = request.params.nick;
-        User.findByNick(nick).then(data => {
+        User.findUserForAuth(nick).then(data => {
             return reply(data);
         });
     }
