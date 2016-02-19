@@ -42,9 +42,6 @@ server.route({
     path: '/posts/id/{id}',
     handler: (request, reply) => {
         const id = +request.params.id;
-        if (isNaN(id)) {
-            //return reply();
-        }
         Post.findById(id).then(data => {
             return reply(data);
         });
@@ -90,12 +87,20 @@ server.route({
  */
 server.route({
     method: 'POST',
-    path: '/posts',
+    path: '/posts/create',
     handler: (request, reply) => {
         const title = request.payload.title;
         const content = request.payload.content;
         const created = request.payload.created;
         const author = request.payload.author;
+        Post.create({
+            title: title,
+            content: content,
+            created: created,
+            author: author
+        }).then(data => {
+            return reply(data);
+        });
     },
     config: {
         validate: {

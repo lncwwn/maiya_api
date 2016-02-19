@@ -9,6 +9,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../modules/database');
+const Post = require('./post');
 
 const User = sequelize.define('user', {
     id: {type: Sequelize.INTEGER, field: 'id', primaryKey: true, autoIncrement: true, unique: true},
@@ -22,6 +23,8 @@ const User = sequelize.define('user', {
     timestamps: false,
     tableName: 'tb_user'
 });
+
+//User.hasMany(Post);
 
 // find users by offset and limit
 User.list = function(offset, limit) {
