@@ -9,6 +9,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../modules/database');
+const User = require('./models/user');
 
 // define Topic model
 const Column = sequelize.define('Column', {
@@ -23,5 +24,37 @@ const Column = sequelize.define('Column', {
     timestamps: false,
     tableName: 'tb_column'
 });
+
+Column.belongsTo(User, {foreignKey: 'author'});
+
+// list columns
+Column.list = function(offset, limit) {
+    return Column.find({
+        include: {
+            model: User,
+            attributes: ['id', 'nick']
+        },
+        offset: offset,
+        limit: limit
+    });
+};
+
+// find column by user
+Column.findByUser = function(userId) {
+    return Column.findOne({
+        where: {
+            author: userId
+        }
+    });
+};
+
+// find column by id
+Column.findById = function(id) {
+    return Column.findOne({
+        where: {
+            id: id
+        }
+    });
+};
 
 module.exports = Column;

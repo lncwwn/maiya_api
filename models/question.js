@@ -53,4 +53,13 @@ Question.findById = function(id) {
     });
 };
 
+// find question by user
+Question.findByUser = function(userId) {
+    return Question.findOne({
+        where: {
+            owner: userId
+        }
+    });
+};
+
 module.exports = Question;

@@ -81,7 +81,8 @@ server.route({
         validate: {
             payload: {
                 nick: Joi.string().min(1),
-                password: Joi.string().length(32) // for encrypted password
+                // for encrypted password
+                password: Joi.string().length(32)
             }
         }
     }
@@ -127,7 +128,8 @@ server.route({
         validate: {
             payload: {
                 nick: Joi.string().min(1),
-                password: Joi.string().length(32), // encrypted password
+                // encrypted password
+                password: Joi.string().length(32),
                 email: Joi.string().email()
             }
         }

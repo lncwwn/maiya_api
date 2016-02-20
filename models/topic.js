@@ -48,4 +48,13 @@ Topic.findById =  function(id) {
     });
 };
 
+// find topic by user
+Topic.findByUser =  function(userId) {
+    return Topic.findOne({
+        where: {
+            owner: userId
+        }
+    });
+};
+
 module.exports = Topic;

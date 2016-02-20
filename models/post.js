@@ -9,6 +9,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../modules/database');
+
 const User = require('./user');
 const Column = require('./column');
 
