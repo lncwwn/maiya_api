@@ -9,6 +9,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../modules/database');
+const User = require('../models/user');
 
 // define Question model
 const Question = sequelize.define('Question', {
@@ -24,5 +25,32 @@ const Question = sequelize.define('Question', {
     timestamps: false,
     tableName: 'tb_question'
 });
+
+Question.belongsTo(User, {foreignKey: 'owner'});
+
+// question list
+Question.list = function(offset, limit) {
+    return Question.findAndCountAll({
+        include: {
+            model: User,
+            attributes: ['id', 'nick']
+        },
+        offset: offset,
+        limit: limit
+    });
+};
+
+// find question by id
+Question.findById = function(id) {
+    return Question.findOne({
+        include: {
+            model: User,
+            attributes: ['id', 'nick']
+        },
+        where: {
+            id: id
+        }
+    });
+};
 
 module.exports = Question;
