@@ -9,7 +9,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../modules/database');
-const User = require('./models/user');
+const User = require('../models/user');
 
 // define Topic model
 const Column = sequelize.define('Column', {

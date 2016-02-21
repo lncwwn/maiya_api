@@ -69,3 +69,38 @@ server.route({
         });
     }
 });
+
+/**
+ * make shop active
+ */
+server.route({
+    method: 'POST',
+    path: '/shops/active',
+    handler: (request, reply) => {
+        const name = request.payload.name;
+        const userId = request.payload.user_id;
+        Shop.count({
+            where: {
+                owner: userId
+            }
+        }).then(count => {
+            if (count === 0) {
+                Shop.create({
+                    name: name,
+                    owner: userId,
+                    active: true
+                }).then(data => {
+                    return reply(data);
+                });
+            } else if (count === 1) {
+                Shop.update({
+                    where: {owner: userId},
+                    name: name,
+                    active: true
+                }).then(data => {
+                    return reply(data);
+                });
+            }
+        });
+    }
+});
