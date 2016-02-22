@@ -17,6 +17,7 @@ const User = sequelize.define('user', {
     email: {type: Sequelize.STRING, field: 'email', unique: true, allowNull: true},
     password: {type: Sequelize.STRING, field: 'password', allowNull: false},
     salt: {type: Sequelize.STRING, field: 'salt', allowNull: false},
+    avatar: {type: Sequelize.STRING, field: 'avatar', allowNull: true},
     created: {type: Sequelize.DATE, field: 'created', defaultValue: Sequelize.NOW, allowNull: false},
     updated: {type: Sequelize.DATE, field: 'updated', allowNull: true}
 }, {
@@ -29,7 +30,7 @@ const User = sequelize.define('user', {
 // find users by offset and limit
 User.list = function(offset, limit) {
     return User.findAndCountAll({
-        attributes: ['id', 'nick', 'email', 'created', 'updated'],
+        attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated'],
         offset: offset,
         limit: limit
     });
@@ -43,7 +44,7 @@ User.findUserForAuth = function(nick) {
 // 该方法不查询用户密码等敏感信息
 User.findByNick = function(nick) {
     return User.findOne({
-        attributes: ['id', 'nick', 'email', 'created', 'updated'],
+        attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated'],
         where: {nick: nick}
     });
 };
