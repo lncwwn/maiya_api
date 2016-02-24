@@ -136,3 +136,40 @@ server.route({
     }
 });
 
+/**
+ * update user profile(exclude password)
+ */
+server.route({
+    method: 'PUT',
+    path: '/users/{id}',
+    handler: (request, reply) => {
+        const id = request.params.id;
+        const _params = request.payload;
+        const params = {};
+        const fields = [];
+        for (let key in _params) {
+            if (key !== 'password') {
+                params[key] = _params[key];
+                fields.push(key);
+            }
+        }
+
+        User.update(params, {
+            where: {id: id},
+            fields: fields
+        }).then(data => {
+            return reply(data);
+        }).catch(function(err) {
+            console.log(err);
+            return reply(err.errors);
+        });
+    },
+    config: {
+        validate: {
+            params: {
+                id: Joi.number()
+            }
+        }
+    }
+});
+

@@ -42,6 +42,14 @@ User.findUserForAuth = function(nick) {
 };
 
 // 该方法不查询用户密码等敏感信息
+User.findById = function(id) {
+    return User.findOne({
+        where: {id: id},
+        attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated']
+    });
+};
+
+// 该方法不查询用户密码等敏感信息
 User.findByNick = function(nick) {
     return User.findOne({
         attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated'],
