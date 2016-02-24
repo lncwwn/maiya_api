@@ -160,7 +160,6 @@ server.route({
         }).then(data => {
             return reply(data);
         }).catch(function(err) {
-            console.log(err);
             return reply(err.errors);
         });
     },

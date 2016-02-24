@@ -24,6 +24,8 @@ const Shop = sequelize.define('Shop', {
     tableName: 'tb_shop'
 });
 
+Shop.belongsTo(User, {foreignKey: 'owner'});
+
 // 分页获取店铺列表
 Shop.list = function(offset, limit) {
     return Shop.findAndCountAll({
@@ -35,6 +37,10 @@ Shop.list = function(offset, limit) {
 // 根据用户id查找店铺
 Shop.findByUser = function(userId) {
     return Shop.findOne({
+        include: {
+            model: User,
+            attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated']
+        },
         where: {
             owner: userId
         }
@@ -44,6 +50,10 @@ Shop.findByUser = function(userId) {
 // 根据店铺ID获取店铺信息
 Shop.findById = function(id) {
     return Shop.findOne({
+        include: {
+            model: User,
+            attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated']
+        },
         where: {
             id: id
         }
@@ -53,6 +63,10 @@ Shop.findById = function(id) {
 // 根据店铺名称获取店铺信息
 Shop.findByName = function(name) {
     return Shop.findOne({
+        include: {
+            model: User,
+            attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated']
+        },
         where: {
             name: name
         }

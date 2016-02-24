@@ -32,7 +32,7 @@ Topic.list =  function(offset, limit) {
     return Topic.findAndCountAll({
         include: {
             model: User,
-            attributes: ['id', 'nick']
+            attributes: ['id', 'nick', 'avatar']
         },
         offset: offset,
         limit: limit
@@ -42,6 +42,10 @@ Topic.list =  function(offset, limit) {
 // find topic by id
 Topic.findById =  function(id) {
     return Topic.findOne({
+        include: {
+            model: User,
+            attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated']
+        },
         where: {
             id: id
         }
@@ -51,6 +55,10 @@ Topic.findById =  function(id) {
 // find topic by user
 Topic.findByUser =  function(userId) {
     return Topic.findOne({
+        include: {
+            model: User,
+            attributes: ['id', 'nick', 'email', 'avatar', 'created', 'updated']
+        },
         where: {
             owner: userId
         }

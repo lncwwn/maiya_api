@@ -79,24 +79,37 @@ server.route({
     handler: (request, reply) => {
         const name = request.payload.name;
         const userId = request.payload.user_id;
+
         Shop.count({
             where: {
-                owner: userId
+                owner: userId,
+                active: 0
             }
         }).then(count => {
             if (count === 0) {
-                Shop.create({
-                    name: name,
-                    owner: userId,
-                    active: true
-                }).then(data => {
-                    return reply(data);
+                Shop.count({
+                    where: {
+                        owner: userId,
+                        active: 1
+                    }
+                }).then(count => {
+                    if (count === 0) {
+                        Shop.create({
+                            name: name,
+                            owner: userId,
+                            active: true
+                        }).then(data => {
+                            return reply(data);
+                        });
+                    }
                 });
             } else if (count === 1) {
                 Shop.update({
-                    where: {owner: userId},
                     name: name,
                     active: true
+                }, {
+                    where: {owner: userId},
+                    fields: ['name', 'active']
                 }).then(data => {
                     return reply(data);
                 });
