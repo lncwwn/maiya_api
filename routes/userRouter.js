@@ -70,6 +70,7 @@ server.route({
                 return reply({
                     id: data.id,
                     nick: data.nick,
+                    avatar: data.avatar,
                     created: data.created,
                     updated: data.updated
                 });
