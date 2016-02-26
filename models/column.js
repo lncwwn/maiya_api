@@ -14,7 +14,7 @@ const User = require('../models/user');
 // define Topic model
 const Column = sequelize.define('Column', {
     id: {type: Sequelize.INTEGER, field: 'id', primaryKey: true, autoIncrement: true, unique: true},
-    name: {type: Sequelize.STRING, field: 'title', allowNull: false},
+    name: {type: Sequelize.STRING, field: 'name', allowNull: false},
     active: {type: Sequelize.BOOLEAN, field: 'active', allowNull: false, defaultValue: false},
     star: {type: Sequelize.INTEGER, field: 'star', allowNull: true, defaultValue: 0},
     author: {type: Sequelize.INTEGER, field: 'author', allowNull: false},
