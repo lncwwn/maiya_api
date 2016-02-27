@@ -43,7 +43,10 @@ server.route({
     method: 'GET',
     path: '/users/nick/{nick}',
     handler: (request, reply) => {
-        const nick = request.params.nick;
+        let nick = request.params.nick;
+        if (nick) {
+            nick = decodeURIComponent(nick);
+        }
         User.findUserForAuth(nick).then(data => {
             return reply(data);
         });
@@ -66,6 +69,8 @@ server.route({
             if (!data) {
                 return reply(Boom.unauthorized(`cannot find user named "${nick}"`));
             }
+            console.log(data.password);
+            console.log(md5(password + data.salt));
             if (data.password === md5(password + data.salt)) {
                 return reply({
                     id: data.id,
@@ -100,7 +105,7 @@ server.route({
     path: '/users/register',
     handler: (request, reply) => {
         const nick = request.payload.nick;
-        const password = request.payload.password1;
+        const password = request.payload.password;
         const email = request.payload.email;
         const salt = util.random().toString();
         const _password = md5(password + salt);

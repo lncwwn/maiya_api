@@ -48,10 +48,25 @@ Post.belongsTo(Column, {foreignKey: 'column'});
 Post.list = function(offset, limit) {
     return Post.findAndCountAll({
         // 查询post所属user
-        include: [{
+        include: {
             model: User,
-            attributes: ['id', 'nick']
-        }],
+            attributes: ['id', 'nick', 'avatar']
+        },
+        order: 'created DESC',
+        offset: offset,
+        limit: limit
+    });
+};
+
+Post.listByColumn = function(columnId, offset, limit) {
+    return Post.findAndCountAll({
+        where: {
+            column: columnId
+        },
+        include: {
+            model: User,
+            attributes: ['id', 'nick', 'avatar']
+        },
         order: 'created DESC',
         offset: offset,
         limit: limit

@@ -32,6 +32,26 @@ server.route({
 });
 
 /**
+ * list posts by columns
+ * /posts/column/1?offset=0&limit=10
+ *
+ * @param offset optional, default is 0
+ * @param limit optional, default is 10
+ */
+server.route({
+    method: 'GET',
+    path: '/posts/column/{id}',
+    handler: (request, reply) => {
+        const columnId = request.params.id;
+        const offset = request.query.offset ? +request.query.offset : 0;
+        const limit = request.query.limit ? +request.query.limit : 10;
+        Post.listByColumn(columnId, offset, limit).then(data => {
+            return reply(data);
+        });
+    }
+});
+
+/**
  * find post by seecified id
  * /posts/id/1
  *

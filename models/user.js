@@ -38,6 +38,7 @@ User.list = function(offset, limit) {
 
 // 该方法查询user所有属性用于用户验证
 User.findUserForAuth = function(nick) {
+    console.log(nick);
     return User.findOne({where: {nick: nick}});
 };
 

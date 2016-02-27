@@ -15,6 +15,18 @@ const Joi = require('joi');
 
 server.route({
     method: 'GET',
+    path: '/columns',
+    handler: (request, reply) => {
+        const offset = request.query.offset ? +request.query.offset : 0;
+        const limit = request.query.limit ? +request.query.limit : 10;
+        Column.list(offset, limit).then(data => {
+            return reply(data);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
     path: '/columns/id/{id}',
     handler: (request, reply) => {
         const id = request.params.id;
