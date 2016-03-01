@@ -29,10 +29,13 @@ Column.belongsTo(User, {foreignKey: 'author'});
 
 // list columns
 Column.list = function(offset, limit) {
-    return Column.find({
+    return Column.findAndCountAll({
         include: {
             model: User,
             attributes: ['id', 'nick']
+        },
+        where: {
+            active: true
         },
         offset: offset,
         limit: limit
