@@ -34,4 +34,5 @@ const userRouter = require('./routes/userRouter');
 const shopRouter = require('./routes/shopRouter');
 const topicRouter = require('./routes/topicRouter');
 const columnRouter = require('./routes/columnRouter');
+const goodsRouter = require('./routes/goodsRouter');
 

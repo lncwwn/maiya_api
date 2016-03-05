@@ -9,6 +9,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../modules/database');
+const Shop = require('./shop');
 
 // define Order model
 const Goods = sequelize.define('Goods', {
@@ -24,5 +25,40 @@ const Goods = sequelize.define('Goods', {
     timestamps: false,
     tableName: 'tb_goods'
 });
+
+Goods.belongsTo(Shop, {foreignKey: 'shop'});
+
+Goods.list = function(offset, limit) {
+    return Goods.findAndCountAll({
+        include: {
+            model: Shop,
+            attributes: ['id', 'name']
+        },
+        offset: offset,
+        limit: limit
+    });
+};
+
+Goods.listByShop = function(offset, limit, shopId) {
+    return Goods.findAndCountAll({
+        where: {
+            shop: shopId
+        },
+        include: {
+            model: Shop,
+            attributes: ['id', 'name']
+        },
+        offset: offset,
+        limit: limit
+    });
+};
+
+Goods.findById = function(id) {
+    return Goods.findOne({
+        where: {
+            id: id
+        }
+    });
+};
 
 module.exports = Goods;
