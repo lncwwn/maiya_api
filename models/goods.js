@@ -18,6 +18,8 @@ const Goods = sequelize.define('Goods', {
     price: {type: Sequelize.STRING, field: 'price', allowNull: false},
     inventory: {type: Sequelize.INTEGER, field: 'inventory', allowNull: false, defaultValue: 0},
     onSale: {type: Sequelize.BOOLEAN, field: 'on_sale', allowNull: false, defaultValue: false},
+    description: {type: Sequelize.STRING, field: 'description', allowNull: true},
+    star: {type: Sequelize.INTEGER, field: 'star', allowNull: true, defaultValue: 0},
     shop: {type: Sequelize.INTEGER, field: 'shop', allowNull: false},
     created: {type: Sequelize.DATE, field: 'created', allowNull: false, defaultValue: Sequelize.NOW},
     updated: {type: Sequelize.DATE, field: 'updated', allowNull: true}
