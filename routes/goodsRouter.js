@@ -38,7 +38,7 @@ server.route({
     handler: (request, reply) => {
         const offset = request.query.offset ? +request.query.offset : 0;
         const limit = request.query.limit ? +request.query.limit : 10;
-        const shopId = request.query.id;
+        const shopId = request.params.id;
         Goods.listByShop(offset, limit, shopId).then(data => {
             return reply(data);
         });
