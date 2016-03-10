@@ -69,8 +69,6 @@ server.route({
             if (!data) {
                 return reply(Boom.unauthorized(`cannot find user named "${nick}"`));
             }
-            console.log(data.password);
-            console.log(md5(password + data.salt));
             if (data.password === md5(password + data.salt)) {
                 return reply({
                     id: data.id,

@@ -44,3 +44,42 @@ server.route({
         });
     }
 });
+
+/**
+ * create new goods
+ */
+server.route({
+    method: 'POST',
+    path: '/goods/new',
+    handler: (request, reply) => {
+        const name = request.payload.name;
+        const price = request.payload.price;
+        const inventory = request.payload.inventory;
+        const description = request.payload.description;
+        const photos = request.payload.photos;
+        const shop = request.payload.shop;
+        Goods.create({
+            name: name,
+            price: price,
+            inventory: inventory,
+            description: description,
+            photos: photos,
+            shop: shop,
+            onSale: true
+        }).then(data => {
+            return reply(data);
+        });
+    },
+    config: {
+        validate: {
+            payload: {
+                name: Joi.string().min(1),
+                price: Joi.number().min(0),
+                inventory: Joi.number().min(0),
+                description: Joi.required(),
+                photos: Joi.required(),
+                shop: Joi.required()
+            }
+        }
+    }
+});

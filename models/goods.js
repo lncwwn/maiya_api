@@ -20,6 +20,7 @@ const Goods = sequelize.define('Goods', {
     onSale: {type: Sequelize.BOOLEAN, field: 'on_sale', allowNull: false, defaultValue: false},
     description: {type: Sequelize.STRING, field: 'description', allowNull: true},
     star: {type: Sequelize.INTEGER, field: 'star', allowNull: true, defaultValue: 0},
+    photos: {type: Sequelize.STRING, field: 'photos', allowNull: false},
     shop: {type: Sequelize.INTEGER, field: 'shop', allowNull: false},
     created: {type: Sequelize.DATE, field: 'created', allowNull: false, defaultValue: Sequelize.NOW},
     updated: {type: Sequelize.DATE, field: 'updated', allowNull: true}
