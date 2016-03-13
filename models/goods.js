@@ -16,6 +16,7 @@ const Goods = sequelize.define('Goods', {
     id: {type: Sequelize.INTEGER, field: 'id', primaryKey: true, autoIncrement: true, unique: true},
     name: {type: Sequelize.STRING, field: 'name', allowNull: false},
     price: {type: Sequelize.STRING, field: 'price', allowNull: false},
+    discountPrice: {type: Sequelize.STRING, field: 'discount_price', allowNull: true},
     inventory: {type: Sequelize.INTEGER, field: 'inventory', allowNull: false, defaultValue: 0},
     onSale: {type: Sequelize.BOOLEAN, field: 'on_sale', allowNull: false, defaultValue: false},
     description: {type: Sequelize.STRING, field: 'description', allowNull: true},
